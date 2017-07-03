@@ -1,0 +1,24 @@
+<!DOCTYPE validators PUBLIC "-//Apache Struts//XWork Validator 1.0.3//EN"
+		"http://struts.apache.org/dtds/xwork-validator-1.0.3.dtd">
+<validators>
+  <field name="partner.name">
+     <field-validator type="required">
+          <message key="errors.required.firstname"/>
+      </field-validator>
+  </field>
+  <field name="partner.acronym">
+     <field-validator type="required">
+          <message key="errors.required.lastname"/>
+      </field-validator>
+  </field>
+  <field name="partner.city">
+     <field-validator type="required">
+          <message key="errors.required.lastname"/>
+      </field-validator>
+  </field>
+  <field name="partner.website">
+        <field-validator type="url">
+            <message><![CDATA[ must be a valid url if supplied ]]></message>
+        </field-validator>
+    </field>
+</validators>

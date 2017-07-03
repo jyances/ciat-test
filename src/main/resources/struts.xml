@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+    <constant name="struts.devMode" value="true"/>
+	<constant name="struts.mapper.alwaysSelectFullNamespace" value="false"/>
+	<constant name="struts.enable.SlashesInActionNames" value="true"/>
+	<constant name="struts.patternMatcher" value="namedVariable"/>
+
+    <package name="default" namespace="/" extends="struts-default">
+        <interceptors>
+            <interceptor-stack name="appDefault">
+               <interceptor-ref name="paramsPrepareParamsStack">
+                    <param name="exception.logEnabled">true</param>
+                    <param name="exception.logLevel">ERROR</param>
+                    <param name="params.excludeParams">dojo\..*,^struts\..*,^session\..*,^request\..*,^application\..*,^servlet(Request|Response)\..*,parameters\...*,submit</param>
+               </interceptor-ref>
+               <interceptor-ref name="validation">
+			      <param name="excludeMethods">input,back,cancel,browse</param>
+			   </interceptor-ref>
+			   <interceptor-ref name="workflow">
+			      <param name="excludeMethods">input,back,cancel,browse</param>
+			   </interceptor-ref>
+            </interceptor-stack>
+        </interceptors>
+		
+        <default-interceptor-ref name="appDefault" />        
+        
+        <default-action-ref name="index"/>
+		
+        <action name="register" class="co.ciat.test.business.PartnerAction" method="register">
+            <result name="success">/WEB-INF/Partner/partner.jsp</result>
+            <interceptor-ref name="basicStack"/>
+        </action>
+        
+        <action name="savePartner" class="co.ciat.test.business.PartnerAction" method="save">            
+            <result name="error">/WEB-INF/Partner/message.jsp</result>
+            <result name="success" type="chain">listPartner</result>
+        </action>
+         <action name="listPartner" class="co.ciat.test.business.PartnerAction" method="list">                        
+            <result name="success">/WEB-INF/Partner/list.jsp</result>
+        </action>
+        
+    </package>
+</struts>
