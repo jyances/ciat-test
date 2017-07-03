@@ -12,6 +12,7 @@ import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.SystemUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -28,14 +29,15 @@ public class CPartnerFileDao implements GenericDao<CPartner> {
         
 
 	private static final Logger logger = LogManager.getLogger();	
-	private static final String TMP_PARTNER_TXT = "/tmp/partner.txt";
+	private static final String UNIX_TMP_PARTNER_TXT = "/tmp/partner.txt";
+	private static final String WINDOWS_TMP_PARTNER_TXT = "C:\\temp\\partner.txt";
 	private Gson gson = new Gson();
 	
 	/**
 	 * 
 	 */
 	public void create(CPartner entity) throws IOException{		
-		Path p = Paths.get(TMP_PARTNER_TXT);	
+		Path p = Paths.get(SystemUtils.IS_OS_LINUX? UNIX_TMP_PARTNER_TXT : WINDOWS_TMP_PARTNER_TXT);		
 		String line = entity.toString() + System.lineSeparator();
 		Files.write(p, line.getBytes(), StandardOpenOption.APPEND);
 				
@@ -45,7 +47,7 @@ public class CPartnerFileDao implements GenericDao<CPartner> {
 	 * 
 	 */
 	public void createJson(CPartner entity) throws IOException{		
-		Path p = Paths.get(TMP_PARTNER_TXT);	
+		Path p = Paths.get(SystemUtils.IS_OS_LINUX? UNIX_TMP_PARTNER_TXT : WINDOWS_TMP_PARTNER_TXT);	
 		String json = gson.toJson(entity) + System.lineSeparator();
 		Files.write(p, json.getBytes(), StandardOpenOption.APPEND);
 				
@@ -56,8 +58,8 @@ public class CPartnerFileDao implements GenericDao<CPartner> {
 	 * @author jyances
 	 */
 	public void createBin(CPartner entity) throws IOException{
-		FileOutputStream fileOut =
-		         new FileOutputStream(TMP_PARTNER_TXT);
+		FileOutputStream fileOut = null;
+		fileOut = new FileOutputStream(SystemUtils.IS_OS_LINUX? UNIX_TMP_PARTNER_TXT : WINDOWS_TMP_PARTNER_TXT);
 		         ObjectOutputStream out = new ObjectOutputStream(fileOut);
 		         out.writeObject(entity);
 		         out.close();
@@ -84,10 +86,10 @@ public class CPartnerFileDao implements GenericDao<CPartner> {
 		FileReader fr = null;
 		List<CPartner> partners = new ArrayList<CPartner>();
 		try {
-			fr = new FileReader(TMP_PARTNER_TXT);
+			fr = new FileReader(SystemUtils.IS_OS_LINUX? UNIX_TMP_PARTNER_TXT : WINDOWS_TMP_PARTNER_TXT);
 			br = new BufferedReader(fr);
 			String sCurrentLine;
-			br = new BufferedReader(new FileReader(TMP_PARTNER_TXT));
+			br = new BufferedReader(new FileReader(SystemUtils.IS_OS_LINUX? UNIX_TMP_PARTNER_TXT : WINDOWS_TMP_PARTNER_TXT));
 
 			while ((sCurrentLine = br.readLine()) != null) {
 				CPartner partner = gson.fromJson(sCurrentLine, CPartner.class);	            
