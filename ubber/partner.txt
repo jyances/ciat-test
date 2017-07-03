@@ -1,0 +1,5 @@
+{"name":"Jose","acronym":"Acronym","type":"Academic Institution","country":"AX","city":"Medellin","branch":false}
+{"name":"David","acronym":"Acronym","type":"Academic Institution","country":"AX","city":"Medellin","branch":false}
+{"name":"Carlos","acronym":"Acronym","type":"Academic Institution","country":"AX","city":"Medellin","branch":false}
+{"name":"Hector","acronym":"Acronym","type":"Academic Institution","country":"AX","city":"Medellin","branch":false}
+{"name":"Juana","acronym":"Acronym","type":"Academic Institution","country":"AX","city":"Medellin","branch":false}
